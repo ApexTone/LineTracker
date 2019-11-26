@@ -14,7 +14,9 @@ const int rightMotor = 6;
 const int rightMotorSpeed = SPEED;
 const int rightCon1 = 5;
 const int rightCon2 = 4;
-int state = 1;
+int state = 2;
+
+int timer1_counter;
 void setup()
 {
   Serial.begin(9600);
@@ -36,6 +38,9 @@ void setup()
     pinMode(ledPin[i], OUTPUT);
   }
 }
+
+
+
 void fwd();
 void lturn(int);
 void rturn(int);
@@ -44,6 +49,7 @@ void stopp();
 static int error = 0, prevError = 0, sumError = 0;
 void loop()
 {
+
   /*
     //delay(50);
     Serial.print(analogRead(A0));
@@ -110,6 +116,20 @@ void loop()
   }
 
   //Control part
+  unsigned long nowTime=millis();
+  /*if(nowTime>=13200)
+  {
+    state=2;
+  }
+  else if(nowTime>=17000)
+  {
+    state=3;
+  }
+  else if(nowTime>=23000)
+  {
+    state=4;
+  }*/
+  
   //1st state
   if (state == 1)
   {
@@ -157,7 +177,7 @@ void loop()
   }
 
   //2nd state
-  if (state==2)
+  else if (state==2)
   {
     if (sensorVal[0] == 1 && sensorVal[1] == 0 && sensorVal[3] == 0 && sensorVal[4] == 0)
     {
@@ -204,7 +224,7 @@ void loop()
 
 
   //3rd state
-  if (state == 3)
+  else if (state == 3)
   {
      if (sensorVal[0] == 1 && sensorVal[1] == 0 && sensorVal[3] == 0 && sensorVal[4] == 0)
     {
@@ -252,7 +272,7 @@ void loop()
 
 
   //4th state
-  if(state == 4)
+  else if(state == 4)
   {
      if (sensorVal[0] == 1 && sensorVal[1] == 0 && sensorVal[3] == 0 && sensorVal[4] == 0)
     {
