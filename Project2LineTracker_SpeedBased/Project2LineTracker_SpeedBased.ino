@@ -1,8 +1,8 @@
 #define SENSOR_NUMBER 5
 
-#define SPEED 100
+#define SPEED 85
 #define BADSPLIT 450
-#define GOODSPLIT 710
+#define GOODSPLIT 650
 
 
 const int ledPin[5]={13,12,11,3,2};
@@ -43,6 +43,7 @@ void rturn(int);
 static int error = 0, prevError = 0, sumError = 0;
 void loop()
 {
+  /*
   //delay(50);
   Serial.print(analogRead(A0));
   Serial.print(" ");
@@ -52,7 +53,7 @@ void loop()
   Serial.print(" ");
   Serial.print(analogRead(A3));
   Serial.print(" ");
-  Serial.println(analogRead(A4));
+  Serial.println(analogRead(A4));*/
 
 
   //Prepare easy-to-digest analogRead
@@ -110,24 +111,29 @@ void loop()
   //Control part
   if(sensorVal[3]+sensorVal[4]+sensorVal[0]+sensorVal[1]+sensorVal[2]==5)
   {
+    rturn(10);
+    delay(200);
     fwd();
-    delay(300);
-    lturn(12);
+    delay(500);
+    lturn(10);
     delay(300);
   }
-  else if(sensorVal[3]==1 && sensorVal[4]==1 && sensorVal[0]==1)
+  else if(sensorVal[3]==1 && sensorVal[4]==1 && (sensorVal[0]==1||sensorVal[1]==1))
   {
-   rturn(50);
+   rturn(70);
+   delay(150);
    //delay(600); 
   }
-  else if(sensorVal[4]==1 && sensorVal[0]==1 && sensorVal[1]==1)
+  else if((sensorVal[3]==1||sensorVal[4]==1) && sensorVal[0]==1 && sensorVal[1]==1)
   {
-    lturn(50);
+    lturn(70);
+    delay(150);
     //delay(600);
   }
   else if((sensorVal[3]==0 && sensorVal[4]==1) && sensorVal[0]==0 && sensorVal[1]==0)
   {
-    rturn(25);
+    rturn(40);
+    delay(250);
     //delay(300);
   }
   else if((sensorVal[3]==1 && sensorVal[4]==1) && sensorVal[0]==0 && sensorVal[1]==0)
@@ -137,17 +143,18 @@ void loop()
   }
   else if((sensorVal[3]==1 && sensorVal[4]==0) && sensorVal[0]==0 && sensorVal[1]==0 && sensorVal[2]==0)
   {
-    rturn(12);
+    rturn(10);
     //delay(100);
   }
   else if((sensorVal[3]==1 && sensorVal[4]==0) && sensorVal[0]==0 && sensorVal[1]==0 && sensorVal[2]==1)
   {
-    rturn(6);
+    rturn(5);
     //delay(50);
   }
   else if(sensorVal[3]==0 && sensorVal[4]==0 && (sensorVal[0]==1 && sensorVal[1]==0))
   {
-    lturn(30);
+    lturn(40);
+    delay(250);
     //delay(300);
   }
   else if(sensorVal[3]==0 && sensorVal[4]==0 && (sensorVal[0]==1 && sensorVal[1]==1))
@@ -157,26 +164,28 @@ void loop()
   }
   else if(sensorVal[3]==0 && sensorVal[4]==0 && (sensorVal[0]==0 && sensorVal[1]==1) && sensorVal[2]==0)
   {
-    lturn(12);
+    lturn(10);
     //delay(100);
   }
   else if(sensorVal[3]==0 && sensorVal[4]==0 && (sensorVal[0]==0 && sensorVal[1]==1) && sensorVal[2]==1)
   {
-    lturn(12);
+    lturn(10);
     //delay(100);
   }
   else
   {
     fwd();
   }
+
+  //delay(150);
 }
 
 
 
 void fwd()
 {
-  analogWrite(leftMotor, SPEED-20);
-  analogWrite(rightMotor, SPEED-20);
+  analogWrite(leftMotor, SPEED);
+  analogWrite(rightMotor, SPEED);
   digitalWrite(leftCon1, LOW);
   digitalWrite(leftCon2, HIGH);
   digitalWrite(rightCon1, HIGH);
