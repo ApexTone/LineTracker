@@ -14,7 +14,7 @@ const int rightMotor = 6;
 const int rightMotorSpeed = SPEED;
 const int rightCon1 = 5;
 const int rightCon2 = 4;
-int state = 2;
+int state = 5;
 
 int timer1_counter;
 void setup()
@@ -41,7 +41,7 @@ void setup()
 
 
 
-void fwd();
+void fwd(int);
 void lturn(int);
 void rturn(int);
 void stopp();
@@ -116,20 +116,22 @@ void loop()
   }
 
   //Control part
-  unsigned long nowTime=millis();
-  /*if(nowTime>=13200)
-  {
-    state=2;
-  }
-  else if(nowTime>=17000)
-  {
-    state=3;
-  }
-  else if(nowTime>=23000)
-  {
-    state=4;
-  }*/
-  
+  unsigned long nowTime = millis();
+
+  /*if (nowTime >= 35000)
+    {
+    state = 4;
+    }
+    else if (nowTime >= 25200)
+    {
+    state = 3;
+    }
+    else if (nowTime >= 13200)
+    {
+    state = 2;
+    }*/
+
+
   //1st state
   if (state == 1)
   {
@@ -162,22 +164,23 @@ void loop()
       lturn(50);
       delay(200);
     }
-    else if(sensorVal[0]+sensorVal[1]>sensorVal[3]+sensorVal[4])
+    else if (sensorVal[0] + sensorVal[1] > sensorVal[3] + sensorVal[4])
     {
       lturn(40);
     }
-    else if(sensorVal[0]+sensorVal[1]<sensorVal[3]+sensorVal[4])
+    else if (sensorVal[0] + sensorVal[1] < sensorVal[3] + sensorVal[4])
     {
       rturn(40);
-      delay(200);    }
+      delay(200);
+    }
     else
     {
-      fwd();
+      fwd(0);
     }
   }
 
   //2nd state
-  else if (state==2)
+  else if (state == 2)
   {
     if (sensorVal[0] == 1 && sensorVal[1] == 0 && sensorVal[3] == 0 && sensorVal[4] == 0)
     {
@@ -205,20 +208,20 @@ void loop()
     }
     else if (sensorVal[0] == 1 && sensorVal[1] == 1 && sensorVal[3] == 1 && sensorVal[4] == 1)
     {
-      fwd();
+      fwd(0);
       delay(300);
     }
-    else if(sensorVal[0]+sensorVal[1]>sensorVal[3]+sensorVal[4])
+    else if (sensorVal[0] + sensorVal[1] > sensorVal[3] + sensorVal[4])
     {
       lturn(40);
     }
-    else if(sensorVal[0]+sensorVal[1]<sensorVal[3]+sensorVal[4])
+    else if (sensorVal[0] + sensorVal[1] < sensorVal[3] + sensorVal[4])
     {
       rturn(40);
     }
     else
     {
-      fwd();
+      fwd(0);
     }
   }
 
@@ -226,55 +229,107 @@ void loop()
   //3rd state
   else if (state == 3)
   {
-     if (sensorVal[0] == 1 && sensorVal[1] == 0 && sensorVal[3] == 0 && sensorVal[4] == 0)
-    {
-      lturn(70);
-    }
-    else if (sensorVal[0] == 1 && sensorVal[1] == 1 && sensorVal[3] == 0 && sensorVal[4] == 0)
-    {
+    if (sensorVal[0] == 1 && sensorVal[1] == 0 && sensorVal[3] == 0 && sensorVal[4] == 0)
+      {
       lturn(50);
-    }
-    else if (sensorVal[0] == 0 && sensorVal[1] == 1 && sensorVal[3] == 0 && sensorVal[4] == 0)
-    {
+      }
+      else if (sensorVal[0] == 1 && sensorVal[1] == 1 && sensorVal[3] == 0 && sensorVal[4] == 0)
+      {
+        lturn(50);
+        delay(300);
+      }
+      else if (sensorVal[0] == 0 && sensorVal[1] == 1 && sensorVal[3] == 0 && sensorVal[4] == 0)
+      {
       lturn(30);
-    }
-    else if (sensorVal[0] == 0 && sensorVal[1] == 0 && sensorVal[3] == 0 && sensorVal[4] == 1)
-    {
-      rturn(70);
-    }
-    else if (sensorVal[0] == 0 && sensorVal[1] == 0 && sensorVal[3] == 1 && sensorVal[4] == 1)
-    {
+      }
+      else if (sensorVal[0] == 0 && sensorVal[1] == 0 && sensorVal[3] == 0 && sensorVal[4] == 1)
+      {
       rturn(50);
-      delay(400);
-    }
-    else if (sensorVal[0] == 0 && sensorVal[1] == 0 && sensorVal[3] == 1 && sensorVal[4] == 0)
-    {
+      }
+      else if (sensorVal[0] == 0 && sensorVal[1] == 0 && sensorVal[3] == 1 && sensorVal[4] == 1)
+      {
+      rturn(50);
+      delay(350);
+      }
+      else if (sensorVal[0] == 0 && sensorVal[1] == 0 && sensorVal[3] == 1 && sensorVal[4] == 0)
+      {
       rturn(30);
-    }
-    else if (sensorVal[0] == 1 && sensorVal[1] == 1 && sensorVal[3] == 1 && sensorVal[4] == 1)
-    {
-      lturn(50);
+      }
+      else if (sensorVal[0] == 1 && sensorVal[1] == 1 && sensorVal[3] == 1 && sensorVal[4] == 1)
+      {
+      lturn(60);
       delay(250);
-    }
-    else if(sensorVal[0]+sensorVal[1]>sensorVal[3]+sensorVal[4])
-    {
-      lturn(40);
-    }
-    else if(sensorVal[0]+sensorVal[1]<sensorVal[3]+sensorVal[4])
-    {
-      rturn(40);
-    }
-    else
-    {
-      fwd();
-    }
+      }
+      else if (sensorVal[0] + sensorVal[1] > sensorVal[3] + sensorVal[4])
+      {
+      lturn(30);
+      }
+      else if (sensorVal[0] + sensorVal[1] < sensorVal[3] + sensorVal[4])
+      {
+      rturn(30);
+      }
+      else
+      {
+      fwd(0);
+      }
   }
 
 
+
   //4th state
-  else if(state == 4)
+  else if (state == 4)
   {
-     if (sensorVal[0] == 1 && sensorVal[1] == 0 && sensorVal[3] == 0 && sensorVal[4] == 0)
+    if (sensorVal[0] == 1 && sensorVal[1] == 0 && sensorVal[3] == 0 && sensorVal[4] == 0)
+      {
+      lturn(50);
+      }
+      else if (sensorVal[0] == 1 && sensorVal[1] == 1 && sensorVal[3] == 0 && sensorVal[4] == 0)
+      {
+        lturn(50);
+        delay(300);
+      }
+      else if (sensorVal[0] == 0 && sensorVal[1] == 1 && sensorVal[3] == 0 && sensorVal[4] == 0)
+      {
+      lturn(30);
+      }
+      else if (sensorVal[0] == 0 && sensorVal[1] == 0 && sensorVal[3] == 0 && sensorVal[4] == 1)
+      {
+      rturn(50);
+      }
+      else if (sensorVal[0] == 0 && sensorVal[1] == 0 && sensorVal[3] == 1 && sensorVal[4] == 1)
+      {
+      lturn(50);
+      delay(350);
+      }
+      else if (sensorVal[0] == 0 && sensorVal[1] == 0 && sensorVal[3] == 1 && sensorVal[4] == 0)
+      {
+      rturn(30);
+      }
+      else if (sensorVal[0] == 1 && sensorVal[1] == 1 && sensorVal[3] == 1 && sensorVal[4] == 1)
+      {
+      lturn(60);
+      delay(250);
+      }
+      else if (sensorVal[0] + sensorVal[1] > sensorVal[3] + sensorVal[4])
+      {
+      lturn(30);
+      }
+      else if (sensorVal[0] + sensorVal[1] < sensorVal[3] + sensorVal[4])
+      {
+      rturn(30);
+      }
+      else
+      {
+      fwd(0);
+      }
+  }
+
+
+
+  //5th state
+  else if (state == 5)
+  {
+    if (sensorVal[0] == 1 && sensorVal[1] == 0 && sensorVal[3] == 0 && sensorVal[4] == 0)
     {
       lturn(70);
     }
@@ -293,6 +348,7 @@ void loop()
     else if (sensorVal[0] == 0 && sensorVal[1] == 0 && sensorVal[3] == 1 && sensorVal[4] == 1)
     {
       rturn(50);
+      delay(100);
     }
     else if (sensorVal[0] == 0 && sensorVal[1] == 0 && sensorVal[3] == 1 && sensorVal[4] == 0)
     {
@@ -303,27 +359,27 @@ void loop()
       lturn(50);
       delay(300);
     }
-    else if(sensorVal[0]+sensorVal[1]>sensorVal[3]+sensorVal[4])
+    else if (sensorVal[0] + sensorVal[1] > sensorVal[3] + sensorVal[4])
     {
       lturn(40);
     }
-    else if(sensorVal[0]+sensorVal[1]<sensorVal[3]+sensorVal[4])
+    else if (sensorVal[0] + sensorVal[1] < sensorVal[3] + sensorVal[4])
     {
       rturn(40);
     }
     else
     {
-      fwd();
+      fwd(0);
     }
   }
 }
 
 
 
-void fwd()
+void fwd(int moreSpd)
 {
-  analogWrite(leftMotor, SPEED);
-  analogWrite(rightMotor, SPEED);
+  analogWrite(leftMotor, SPEED + moreSpd);
+  analogWrite(rightMotor, SPEED + moreSpd);
   digitalWrite(leftCon1, LOW);
   digitalWrite(leftCon2, HIGH);
   digitalWrite(rightCon1, HIGH);
