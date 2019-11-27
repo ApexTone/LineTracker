@@ -14,6 +14,7 @@ const int rightMotor = 6;
 const int rightMotorSpeed = SPEED;
 const int rightCon1 = 5;
 const int rightCon2 = 4;
+const int stateLED = 7;
 int state = 1;
 void setup()
 {
@@ -24,6 +25,7 @@ void setup()
   pinMode(leftCon2, OUTPUT);
   pinMode(rightCon1, OUTPUT);
   pinMode(rightCon2, OUTPUT);
+  pinMode(stateLED, OUTPUT);
 
   pinMode(A0, INPUT);
   pinMode(A1, INPUT);
@@ -116,23 +118,27 @@ void loop()
   //Control part
   unsigned long nowTime = millis();
 
-  /*if (nowTime >= 35000)
-    {
+  if (nowTime >= 38662)
+  {
     state = 4;
-    }
-    else if (nowTime >= 25200)
-    {
+    digitalWrite(stateLED, LOW);
+  }
+  else if (nowTime >= 36390)
+  {
     state = 3;
-    }
-    else if (nowTime >= 13200)
-    {
+    digitalWrite(stateLED, HIGH);
+  }
+  else if (nowTime >= 16768)
+  {
     state = 2;
-    }*/
+    digitalWrite(stateLED, LOW);
+  }
 
 
   //1st state: Zig-Zag
   if (state == 1)
   {
+    digitalWrite(stateLED, HIGH);
     if (sensorVal[0] == 1 && sensorVal[1] == 0 && sensorVal[3] == 0 && sensorVal[4] == 0)
     {
       lturn(70);
@@ -159,8 +165,10 @@ void loop()
     }
     else if (sensorVal[0] == 1 && sensorVal[1] == 1 && sensorVal[3] == 1 && sensorVal[4] == 1)
     {
+      fwd(0);
+      delay(70);
       lturn(50);
-      delay(200);
+      delay(100);
     }
     else if (sensorVal[0] + sensorVal[1] > sensorVal[3] + sensorVal[4])
     {
@@ -169,7 +177,7 @@ void loop()
     else if (sensorVal[0] + sensorVal[1] < sensorVal[3] + sensorVal[4])
     {
       rturn(40);
-      delay(200);
+      delay(100);
     }
     else
     {
@@ -228,48 +236,48 @@ void loop()
   else if (state == 3)
   {
     if (sensorVal[0] == 1 && sensorVal[1] == 0 && sensorVal[3] == 0 && sensorVal[4] == 0)
-      {
+    {
       lturn(50);
-      }
-      else if (sensorVal[0] == 1 && sensorVal[1] == 1 && sensorVal[3] == 0 && sensorVal[4] == 0)
-      {
-        lturn(50);
-        delay(320);
-      }
-      else if (sensorVal[0] == 0 && sensorVal[1] == 1 && sensorVal[3] == 0 && sensorVal[4] == 0)
-      {
+    }
+    else if (sensorVal[0] == 1 && sensorVal[1] == 1 && sensorVal[3] == 0 && sensorVal[4] == 0)
+    {
+      lturn(50);
+      delay(270);
+    }
+    else if (sensorVal[0] == 0 && sensorVal[1] == 1 && sensorVal[3] == 0 && sensorVal[4] == 0)
+    {
       lturn(30);
-      }
-      else if (sensorVal[0] == 0 && sensorVal[1] == 0 && sensorVal[3] == 0 && sensorVal[4] == 1)
-      {
+    }
+    else if (sensorVal[0] == 0 && sensorVal[1] == 0 && sensorVal[3] == 0 && sensorVal[4] == 1)
+    {
       rturn(50);
-      }
-      else if (sensorVal[0] == 0 && sensorVal[1] == 0 && sensorVal[3] == 1 && sensorVal[4] == 1)
-      {
-      rturn(50);
-      delay(320);
-      }
-      else if (sensorVal[0] == 0 && sensorVal[1] == 0 && sensorVal[3] == 1 && sensorVal[4] == 0)
-      {
+    }
+    else if (sensorVal[0] == 0 && sensorVal[1] == 0 && sensorVal[3] == 1 && sensorVal[4] == 1)
+    {
+      lturn(50);
+      delay(270);
+    }
+    else if (sensorVal[0] == 0 && sensorVal[1] == 0 && sensorVal[3] == 1 && sensorVal[4] == 0)
+    {
       rturn(30);
-      }
-      else if (sensorVal[0] == 1 && sensorVal[1] == 1 && sensorVal[3] == 1 && sensorVal[4] == 1)
-      {
+    }
+    else if (sensorVal[0] == 1 && sensorVal[1] == 1 && sensorVal[3] == 1 && sensorVal[4] == 1)
+    {
       lturn(60);
       delay(250);
-      }
-      else if (sensorVal[0] + sensorVal[1] > sensorVal[3] + sensorVal[4])
-      {
+    }
+    else if (sensorVal[0] + sensorVal[1] > sensorVal[3] + sensorVal[4])
+    {
       lturn(30);
-      }
-      else if (sensorVal[0] + sensorVal[1] < sensorVal[3] + sensorVal[4])
-      {
+    }
+    else if (sensorVal[0] + sensorVal[1] < sensorVal[3] + sensorVal[4])
+    {
       rturn(30);
-      }
-      else
-      {
+    }
+    else
+    {
       fwd(0);
-      }
+    }
   }
 
 
@@ -304,8 +312,8 @@ void loop()
     }
     else if (sensorVal[0] == 1 && sensorVal[1] == 1 && sensorVal[3] == 1 && sensorVal[4] == 1)
     {
-      lturn(50);
-      delay(200);
+      lturn(60);
+      delay(100);
     }
     else if (sensorVal[0] + sensorVal[1] > sensorVal[3] + sensorVal[4])
     {
@@ -313,8 +321,10 @@ void loop()
     }
     else if (sensorVal[0] + sensorVal[1] < sensorVal[3] + sensorVal[4])
     {
-      rturn(40);
+      rturn(60);
       delay(200);
+      fwd(0);
+      delay(50);
     }
     else
     {

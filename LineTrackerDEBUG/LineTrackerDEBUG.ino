@@ -14,7 +14,7 @@ const int rightMotor = 6;
 const int rightMotorSpeed = SPEED;
 const int rightCon1 = 5;
 const int rightCon2 = 4;
-int state = 1;
+int state = 4;
 void setup()
 {
   Serial.begin(9600);
@@ -160,7 +160,7 @@ void loop()
     else if (sensorVal[0] == 1 && sensorVal[1] == 1 && sensorVal[3] == 1 && sensorVal[4] == 1)
     {
       lturn(50);
-      delay(200);
+      delay(100);
     }
     else if (sensorVal[0] + sensorVal[1] > sensorVal[3] + sensorVal[4])
     {
@@ -169,7 +169,7 @@ void loop()
     else if (sensorVal[0] + sensorVal[1] < sensorVal[3] + sensorVal[4])
     {
       rturn(40);
-      delay(200);
+      delay(100);
     }
     else
     {
@@ -234,7 +234,7 @@ void loop()
       else if (sensorVal[0] == 1 && sensorVal[1] == 1 && sensorVal[3] == 0 && sensorVal[4] == 0)
       {
         lturn(50);
-        delay(320);
+        delay(270);
       }
       else if (sensorVal[0] == 0 && sensorVal[1] == 1 && sensorVal[3] == 0 && sensorVal[4] == 0)
       {
@@ -246,8 +246,8 @@ void loop()
       }
       else if (sensorVal[0] == 0 && sensorVal[1] == 0 && sensorVal[3] == 1 && sensorVal[4] == 1)
       {
-      rturn(50);
-      delay(320);
+      lturn(50);
+      delay(270);
       }
       else if (sensorVal[0] == 0 && sensorVal[1] == 0 && sensorVal[3] == 1 && sensorVal[4] == 0)
       {
@@ -313,7 +313,7 @@ void loop()
     }
     else if (sensorVal[0] + sensorVal[1] < sensorVal[3] + sensorVal[4])
     {
-      rturn(40);
+      rturn(45);
       delay(200);
     }
     else
